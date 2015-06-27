@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{flp_citier}
-  s.version = "0.1.15.2"
+  s.version = "0.1.15.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Hamilton, Originally from Laurent Buffat, Pierre-Emmanuel Jouve"]
@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = s.description
 
-  s.add_dependency('rails_sql_views') #needs the 'rails_sql_views', :git => 'git://github.com/morgz/rails_sql_views.git'  fork. Set this in your apps bundle
+  s.add_dependency 'flip-rails_sql_views', '0.8.1'
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
