@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{citier}
+  s.name = %q{flp_citier}
   s.version = "0.1.15.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
     "lib/citier/root_instance_methods.rb",
     "lib/citier/sql_adapters.rb",
     "lib/citier/relation_methods.rb",
-    "citier.gemspec"]
+    "flp_citier.gemspec"]
   s.homepage = %q{https://github.com/peterhamilton/citier/}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "citier", "--main", "README"]
   s.require_paths = ["lib"]
