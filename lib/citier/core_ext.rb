@@ -35,18 +35,6 @@ class ActiveRecord::Base
 end
 
 def create_citier_view(theclass)  #function for creating views for migrations
-  # flush any column info in memory
-  # Loops through and stops once we've cleaned up to our root class.
-  # We MUST user Writable as that is the place where changes might reside!
-  reset_class = theclass
-  until reset_class == ActiveRecord::Base
-    citier_debug("Resetting column information on #{reset_class}")
-    reset_class.reset_column_information
-    reset_class::Writable.reset_column_information if reset_class.constants.include?(:Writable)
-
-    reset_class = reset_class.superclass
-  end
-
   self_columns = theclass::Writable.column_names.select{ |c| c != "id" }
   parent_columns = theclass.superclass.column_names.select{ |c| c != "id" }
   columns = parent_columns+self_columns
@@ -70,6 +58,20 @@ def create_citier_view(theclass)  #function for creating views for migrations
 
 end
 
+def reset_information(theclass)
+  # flush any column info in memory
+  # Loops through and stops once we've cleaned up to our root class.
+  # We MUST user Writable as that is the place where changes might reside!
+  reset_class = theclass
+  until reset_class == ActiveRecord::Base
+    citier_debug("Resetting column information on #{reset_class}")
+    reset_class.reset_column_information
+    reset_class::Writable.reset_column_information if reset_class.constants.include?(:Writable)
+
+    reset_class = reset_class.superclass
+  end
+end
+
 def drop_citier_view(theclass) #function for dropping views for migrations
   self_read_table = theclass.table_name
   sql = "DROP VIEW #{self_read_table}"
@@ -84,6 +86,8 @@ def update_citier_view(theclass) #function for updating views for migrations
 
   citier_debug("Updating citier view for #{theclass}")
 
+  reset_information(theclass)
+
   if theclass.table_exists?
     drop_citier_view(theclass)
     create_citier_view(theclass)
@@ -96,6 +100,8 @@ end
 def create_or_update_citier_view(theclass) #Convienience function for updating or creating views for migrations
 
   citier_debug("Create or Update citier view for #{theclass}")
+
+  reset_information(theclass)
 
   if theclass.table_exists?
     update_citier_view(theclass)
